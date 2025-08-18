@@ -1,62 +1,77 @@
-## Primeros Pasos
+# 🏥 Patient Management API
 
-### Clonar el proyecto.
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
 
-Ejecuta el siguiente comando en tu terminal.
+API REST para gestión de pacientes implementada con arquitectura hexagonal y TypeScript.
+
+## 📋 Tabla de Contenidos
+
+- [Instalación](#instalación)
+- [Configuración](#configuración)
+- [Uso](#uso)
+- [Arquitectura](#arquitectura)
+- [Endpoints](#endpoints)
+
+## 🚀 Instalación
+
+### Prerequisitos
+
+- Node.js >= 14
+- pnpm
+
+### Clonar el proyecto
 
 ```bash
 git clone
-```
-
-### Instalar el proyecto.
-
-Cambia de directorio hacia la carpeta donde se clono el proyecto.
-
-```bash
 cd patients
 ```
 
-Una vez que estes en la carpeta, instala las dependencias con el siguiente comando.
+### Instalar dependencias
 
 ```bash
 pnpm install
 ```
 
-Crea el archivo de configuracion de las variables de entorno llamado `.env` puedes ayudarte del archivo de ejemplo `env.example`.
+## ⚙️ Configuración
+
+1. Crear archivo de variables de entorno:
 
 ```bash
-touch .env
+cp .env.example .env
 ```
 
-El archivo de debe de contener la siguiente variable.
+2. Configurar las variables necesarias:
 
 ```bash
-#.env
+# Server Configuration
 EXPRESS_PORT=8080
 ```
 
-### Iniciar el proyecto.
+## 💻 Uso
 
-Para iniciar el servidor de desarrollo debes de ejecutar el siguiente comando.
+Iniciar el servidor de desarrollo:
 
 ```bash
 pnpm dev
 ```
 
-Los recursos disponibles son los siguientes.
+## 🔌 Endpoints
 
-| Metodo | Url                                  | Action                    |
-| ------ | ------------------------------------ | ------------------------- |
-| POST   | http://localhost:8080/api/v1/patient | Crear un nuevo pacient    |
-| GET    | http://localhost:8080/api/v1/patient | Consultar a los pacientes |
+| Método | Endpoint          | Descripción          |
+| ------ | ----------------- | -------------------- |
+| `POST` | `/api/v1/patient` | Crear nuevo paciente |
+| `GET`  | `/api/v1/patient` | Listar pacientes     |
 
-## Uso de la API.
+### Ejemplos de uso
 
-### Crear un nuevo paciente.
+#### Crear paciente
 
-Para crear un nuevo paciente, debes de enviar en el cuerpo de la peticion algo como siguiente.
+```json
+POST /api/v1/patient
+Content-Type: application/json
 
-```js
 {
   "name": "Ezeen",
   "age": 25,
@@ -64,42 +79,41 @@ Para crear un nuevo paciente, debes de enviar en el cuerpo de la peticion algo c
 }
 ```
 
-## Arquitectura
+## 🏗️ Arquitectura
 
-Estructura del Proyecto:
+### Estructura del Proyecto
 
-- `context/`: Representa los diferentes contextos acotados (bounded contexts)
-    - `patient/`
+```
 
-Cada contexto sigue la estructura hexagonal clásica:
+src/
+├── context/
+│ └── patient/
+│ ├── application/ # Casos de uso
+│ ├── domain/ # Reglas de negocio
+│ └── infrastructure/ # Implementaciones
 
-- `application/`: Casos de uso
-- `domain/`: Reglas de negocio y entidades
-- `infrastructure/`: Implementaciones técnicas
+```
 
-Ventajas de la Arquitectura Hexagonal en este proyecto:
+### Principios de Arquitectura Hexagonal
 
-- Independencia del Dominio:
+#### 🎯 Independencia del Dominio
 
-El dominio está completamente aislado en carpetas como `patient/domain/`.
+- Dominio aislado y protegido
+- Lógica de negocio pura
+- Sin dependencias externas
 
-Las reglas de negocio están protegidas y no dependen de frameworks externos
-Por ejemplo: `Patient.ts`, `PatientProps.ts` contienen la lógica de negocio pura
+#### 🔄 Inversión de Dependencias
 
-- Inversión de Dependencias:
+- Interfaces en el dominio
+- Implementaciones flexibles
+- Fácil mantenimiento
 
-Se utilizan interfaces como `PatientRepository.ts` en el dominio
-Las implementaciones están en infrastructure, como `InMemoryPatientRepository.ts`.
-Esto facilita el cambio de implementaciones sin otras partes del codigo
+#### 📦 Value Objects
 
-- Separación de Casos de Uso:
+- Encapsulación robusta
+- Validaciones integradas
+- Código más seguro
 
-Cada operación está aislada en su propio caso de uso
-Por ejemplo: `PatientSave.ts`, `PatientMatch.ts`
-Esto mejora la mantenibilidad y hace el código más predecible
+```
 
-- Value Objects:
-
-Uso extensivo de Value Objects para encapsular reglas de validación
-Por ejemplo: `PatientAge.ts`, `PatientName.ts`
-Evita el uso de primitivos y hace el código más robusto
+```
