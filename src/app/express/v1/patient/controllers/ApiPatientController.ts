@@ -8,6 +8,8 @@ import { Criteria } from '../../../../../context/shared/domain/criteria/Criteria
 import { Filters } from '../../../../../context/shared/domain/criteria/Filters'
 import { Order } from '../../../../../context/shared/domain/criteria/Order'
 import { PatientMatch } from '../../../../../context/patient/application/match/PatientMatch'
+import { Operators } from '../../../../../context/shared/domain/criteria/Operators'
+import { QueryStringCriteriaParser } from '../../../../../context/shared/domain/QueryStringCriteriaParser'
 
 interface ApiPatientControllerProps {
     patientRepository: PatientRepository
@@ -28,7 +30,9 @@ export class ApiPatientController implements GetController, PostController {
     }
 
     public async index(request: Request, response: Response): Promise<void> {
-        const criteria = new Criteria(Filters.none(), Order.none())
+        const baseUrl = new URLSearchParams(request.originalUrl)
+        const criteria = QueryStringCriteriaParser.parse(baseUrl)
+        console.log('criteria', JSON.stringify(criteria, null, 2))
         const patientMatch = new PatientMatch(this.patientRepository)
         const patients = await patientMatch.run(criteria)
         const patientsPrimitives = patients.map((patient: Patient) =>

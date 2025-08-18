@@ -1,5 +1,7 @@
 import { Criteria } from '../../../shared/domain/criteria/Criteria'
+import { InMemoryCriteriaParser } from '../../../shared/infrastructure/criteria/InMemoryCriteriaParser'
 import { Patient } from '../../domain/Patient'
+import { PatientProps } from '../../domain/PatientProps'
 import { PatientRepository } from '../../domain/PatientRepository'
 
 export class InMemoryPatientRepository implements PatientRepository {
@@ -10,6 +12,18 @@ export class InMemoryPatientRepository implements PatientRepository {
     }
 
     async match(criteria: Criteria): Promise<Patient[]> {
-        return Array.from(this.patients.values())
+        const values = Array.from(this.patients.values()).map((patient) =>
+            patient.toPrimitives()
+        )
+        const criteriaParser = new InMemoryCriteriaParser()
+
+        return criteriaParser
+            .parse<PatientProps>(criteria, values)
+            .map((primitives) =>
+                Patient.fromPrimitives({
+                    ...primitives,
+                    id: primitives.id as string,
+                })
+            )
     }
 }
