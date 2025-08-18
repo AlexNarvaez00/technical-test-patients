@@ -1,5 +1,5 @@
-import { Patient } from '../domain/Patient'
-import { PatientRepository } from '../domain/PatientRepository'
+import { Patient } from '../../domain/Patient'
+import { PatientRepository } from '../../domain/PatientRepository'
 
 export class PatientSave {
     constructor(private readonly repository: PatientRepository) {}

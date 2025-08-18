@@ -4,7 +4,7 @@ import { PatientName } from './PatientName'
 import { PatientSymptoms } from './PatientSymptoms'
 
 export interface PatientProps {
-    id: Uuid
+    id?: Uuid
     name: PatientName
     age: PatientAge
     symptoms: PatientSymptoms

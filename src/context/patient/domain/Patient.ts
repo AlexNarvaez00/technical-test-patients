@@ -12,7 +12,7 @@ export class Patient extends Entity<PatientProps> {
     }
 
     public get id(): string {
-        return this.props.id.value
+        return this._id.value
     }
 
     public get age(): number {
@@ -38,7 +38,7 @@ export class Patient extends Entity<PatientProps> {
         symptoms,
     }: PatientPrimitives): Patient {
         return new Patient({
-            id: new Uuid(id),
+            id: id ? new Uuid(id) : Uuid.random(),
             age: new PatientAge(age),
             name: new PatientName(name),
             symptoms: new PatientSymptoms(symptoms),
