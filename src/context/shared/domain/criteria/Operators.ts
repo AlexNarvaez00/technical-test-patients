@@ -3,4 +3,5 @@ export enum Operators {
     GT = 'GT',
     LT = 'LT',
     IN = 'IN',
+    CONTAINS = 'CONTAINS',
 }
