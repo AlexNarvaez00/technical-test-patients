@@ -24,8 +24,8 @@ API REST para gestión de pacientes implementada con arquitectura hexagonal y Ty
 ### Clonar el proyecto
 
 ```bash
-git clone
-cd patients
+git clone https://github.com/AlexNarvaez00/technical-test-patients.git
+cd technical-test-patients
 ```
 
 ### Instalar dependencias
