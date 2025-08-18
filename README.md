@@ -63,3 +63,43 @@ Para crear un nuevo paciente, debes de enviar en el cuerpo de la peticion algo c
   "symptoms": "Fiebre y vomito"
 }
 ```
+
+## Arquitectura
+
+Estructura del Proyecto:
+
+- `context/`: Representa los diferentes contextos acotados (bounded contexts)
+    - `patient/`
+
+Cada contexto sigue la estructura hexagonal clásica:
+
+- `application/`: Casos de uso
+- `domain/`: Reglas de negocio y entidades
+- `infrastructure/`: Implementaciones técnicas
+
+Ventajas de la Arquitectura Hexagonal en este proyecto:
+
+- Independencia del Dominio:
+
+El dominio está completamente aislado en carpetas como `patient/domain/`.
+
+Las reglas de negocio están protegidas y no dependen de frameworks externos
+Por ejemplo: `Patient.ts`, `PatientProps.ts` contienen la lógica de negocio pura
+
+- Inversión de Dependencias:
+
+Se utilizan interfaces como `PatientRepository.ts` en el dominio
+Las implementaciones están en infrastructure, como `InMemoryPatientRepository.ts`.
+Esto facilita el cambio de implementaciones sin otras partes del codigo
+
+- Separación de Casos de Uso:
+
+Cada operación está aislada en su propio caso de uso
+Por ejemplo: `PatientSave.ts`, `PatientMatch.ts`
+Esto mejora la mantenibilidad y hace el código más predecible
+
+- Value Objects:
+
+Uso extensivo de Value Objects para encapsular reglas de validación
+Por ejemplo: `PatientAge.ts`, `PatientName.ts`
+Evita el uso de primitivos y hace el código más robusto
