@@ -79,6 +79,22 @@ Content-Type: application/json
 }
 ```
 
+#### Consultar pacientes con filtros
+
+Puedes filtrar, paginar y limitar los resultados usando query parameters:
+
+```http
+GET /api/v1/patient?filter[0][field]=name&filter[0][operator]=CONTAINS&filter[0][value]=a&filter[1][field]=age&filter[1][operator]=LT&filter[1][value]=46&skip=1&limit=10
+```
+
+Parámetros disponibles:
+
+- `filter[n][field]`: Campo a filtrar (name, age, symptoms)
+- `filter[n][operator]`: Operador de comparación (CONTAINS, LT, GT, EQ)
+- `filter[n][value]`: Valor a comparar
+- `skip`: Número de registros a saltar (paginación)
+- `limit`: Cantidad máxima de registros a devolver
+
 ## 🏗️ Arquitectura
 
 ### Estructura del Proyecto
@@ -113,7 +129,3 @@ src/
 - Encapsulación robusta
 - Validaciones integradas
 - Código más seguro
-
-```
-
-```
