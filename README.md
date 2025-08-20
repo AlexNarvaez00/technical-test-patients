@@ -129,3 +129,7 @@ src/
 - Encapsulación robusta
 - Validaciones integradas
 - Código más seguro
+
+## Diagrama
+
+![Descripción de la imagen](/diagram.png)
